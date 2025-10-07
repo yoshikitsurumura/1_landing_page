@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yoshikitsurumura.github.io/akita_online_juku/sitemap.xml

@@ -1,0 +1,569 @@
+/* 基本設定と変数 */
+:root {
+    --primary-color: #0D47A1; /* Deep Blue */
+    --accent-color: #FF7A00;  /* Orange */
+    --text-color: #333;
+    --bg-color: #FFFFFF;
+    --light-gray: #f8f9fa;
+    --white: #FFFFFF;
+    --border-radius: 12px;
+    --shadow: 0 2px 16px rgba(13, 71, 161, 0.06);
+    --soft-shadow: 0 12px 40px rgba(13, 71, 161, 0.10);
+    --header-bg: rgba(255, 255, 255, 0.8);
+    --muted: #6c757d;
+    --green-bg: #e6f3e6;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Helvetica Neue', 'Arial', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.7;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* アクセシビリティ: キーボードフォーカス */
+:where(a, button, .btn):focus-visible {
+    outline: 3px solid #86b7ff;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+h1, h2, h3, h4 {
+    color: var(--primary-color);
+    line-height: 1.4;
+}
+
+h1 { font-size: 2.8rem; letter-spacing: 0.04em; }
+h2 { font-size: 2.2rem; text-align: center; margin-bottom: 60px; letter-spacing: 0.05em; }
+h3 { font-size: 1.4rem; letter-spacing: 0.03em; }
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 共通コンポーネント */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+section {
+    padding: 100px 0;
+    scroll-margin-top: 80px;
+    position: relative; /* AOS.jsのアンカー用に念のため */
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    will-change: transform;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--soft-shadow);
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* ヘッダー＆ナビ */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1020; /* Bootstrapのコンポーネントより手前に */
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid #e0e9ff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary-color);
+}
+
+.brand-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #fff8eb;
+}
+
+.brand-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.brand-name {
+    font-weight: 700;
+}
+
+.site-nav ul {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.site-nav a {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.site-nav a.active {
+    color: var(--primary-color);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.site-nav .nav-cta {
+    background: var(--accent-color);
+    color: var(--white);
+    padding: 8px 14px;
+    border-radius: 999px;
+}
+
+.nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+}
+
+.nav-toggle .bar {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--primary-color);
+    margin: 5px auto;
+    transition: 0.3s ease;
+}
+
+/* 1. Hero Section */
+#hero {
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    min-height: 90vh;
+    position: relative; /* particles.jsのために必要 */
+    overflow: hidden; /* particles.jsがはみ出さないように */
+    padding: 60px 0;
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1; /* コンテンツより後ろに */
+}
+
+#hero .container {
+    position: relative;
+    z-index: 2; /* particles.jsより手前に */
+}
+
+#hero h1 {
+    color: var(--primary-color);
+}
+
+#hero .lead {
+    font-size: 1.25rem;
+}
+
+.btn-warning {
+    background-color: var(--accent-color);
+    color: var(--white);
+    border-color: var(--accent-color);
+}
+
+.btn-warning:hover {
+    background-color: #e66e00; /* 少し濃いオレンジ */
+    border-color: #e66e00;
+    color: var(--white);
+}
+
+
+/* 2. Features Section */
+#features {
+    background-color: var(--light-gray);
+}
+
+.feature-card {
+    background-color: var(--bg-color);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    border: 1px solid #e9edf5;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--soft-shadow);
+    border-color: var(--primary-color);
+}
+
+.feature-card h3 {
+    margin-bottom: 15px;
+}
+
+/* 3. Services */
+
+
+.special-support {
+
+}
+
+.support-title {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.support-card-custom {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.support-card-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--soft-shadow) !important;
+}
+
+.support-card-custom .fs-1 {
+    font-size: 3rem !important;
+}
+
+/* 4. Schedule */
+.schedule-table-custom {
+    border-radius: var(--border-radius);
+    overflow: hidden; /* for border-radius */
+}
+
+.schedule-table-custom thead {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.schedule-table-custom tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.schedule-table-custom td, .schedule-table-custom th {
+    vertical-align: middle;
+    padding: 1rem;
+}
+
+/* 5. Pricing */
+#pricing {
+    background-color: var(--light-gray);
+}
+
+.pricing-card {
+    border: none;
+    border-radius: var(--border-radius);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--soft-shadow);
+}
+
+.pricing-card .card-header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.pricing-card .price {
+    color: var(--primary-color);
+    font-weight: 800;
+}
+
+.pricing-card .list-group-item {
+    background-color: transparent;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+}
+
+/* 6. Teacher */
+.teacher-card {
+    overflow: hidden;
+}
+
+.teacher-card-img {
+    height: 100%;
+    object-fit: cover;
+    min-height: 300px;
+}
+
+.teacher-card .list-unstyled li {
+    display: flex;
+    align-items: flex-start;
+}
+
+.teacher-card .list-unstyled .bi {
+    margin-top: 0.25em;
+}
+
+/* 7. Flow */
+.step {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid #eef2f7;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--soft-shadow);
+}
+
+.step-icon {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: var(--primary-color);
+    color: var(--white);
+    font-weight: 800;
+    margin: 0 auto 8px auto;
+}
+
+/* ステップ間の矢印 (PC表示のみ) */
+@media (min-width: 768px) {
+    .step:not(:last-child)::after {
+        content: '\F135'; /* Bootstrap Icons の矢印 */
+        font-family: 'bootstrap-icons';
+        position: absolute;
+        top: 50%;
+        right: -28px; /* 位置調整 */
+        transform: translateY(-50%);
+        font-size: 2rem;
+        color: var(--primary-color);
+        opacity: 0.5;
+    }
+}
+
+/* 8. FAQ */
+.faq-item {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 18px 20px;
+    border: 1px solid #eef2f7;
+    box-shadow: var(--shadow);
+    margin-bottom: 14px;
+}
+
+/* 9. CTA */
+#cta {
+    background: linear-gradient(180deg, #f7faff, #ffffff);
+    text-align: center;
+}
+
+.qr-placeholder {
+    margin: 16px auto 0;
+    width: 140px;
+    height: 140px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: repeating-linear-gradient(45deg, #eef2f7, #eef2f7 10px, #f8fbff 10px, #f8fbff 20px);
+    color: var(--muted);
+    border: 1px dashed #c9d6f0;
+}
+
+/* フッター */
+.site-footer {
+    background: var(--light-gray);
+    color: var(--muted);
+    padding: 60px 0 0 0;
+    border-top: 1px solid #e9edf5;
+}
+
+.site-footer a {
+    color: var(--text-color);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.2s;
+}
+.site-footer a:hover {
+    color: var(--primary-color);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 30px;
+    padding-bottom: 40px;
+}
+
+.site-footer h3 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.copyright {
+    border-top: 1px solid #e0e9ff;
+    padding: 20px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* モバイル固定CTA */
+.sticky-cta-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    display: none;
+    justify-content: center;
+    z-index: 60;
+}
+.sticky-cta-btn {
+    box-shadow: 0 10px 24px rgba(255, 122, 0, 0.35);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 992px) { /* lgブレークポイント */
+    #hero {
+        text-align: center;
+    }
+    #hero .col-lg-6 {
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 2.2rem; }
+    #hero h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.8rem; }
+    
+    .container {
+        width: 90%;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+    /* Hero for Mobile */
+    #hero .btn {
+        display: block;
+        margin: 15px auto;
+        width: 90%;
+        max-width: 320px;
+    }
+
+    /* Grid Adjustments */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .teacher-profile {
+        grid-template-columns: 1fr;
+        text-align: center;
+        justify-items: center;
+    }
+
+    /* Pricing Padding */
+    #pricing .price-box {
+        padding: 30px 20px;
+    }
+
+    /* Mobile Navigation */
+    .site-nav {
+        position: absolute;
+        inset: 100% 0 auto 0;
+        background: var(--white);
+        padding: 20px 0;
+        display: none;
+        border-bottom: 1px solid #e9edf5;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+    }
+    .site-nav.open {
+        display: block;
+    }
+    .site-nav ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .nav-toggle {
+        display: grid;
+        place-content: center;
+    }
+
+    .sticky-cta-bar { display: flex; }
+    .sticky-cta-btn { width: calc(100% - 32px); max-width: 520px; }
+}
